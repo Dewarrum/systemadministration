@@ -47,8 +47,6 @@ int main()
 		// 4 - program 2 is writing, 1 for writing, 0 for not writing
 		array[4] = 0;
 	} else {
-		array[1] += 1;
-
 		while (array[3] != 0) {
 
 		}
@@ -56,7 +54,7 @@ int main()
 		array[4] = 1;
 
 		for (i = 0; i < 1000000000L; i++);
-
+		array[1] += 1;
 		array[2] += 1;
 
 		array[4] = 0;

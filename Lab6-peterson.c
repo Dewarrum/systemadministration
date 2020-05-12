@@ -47,8 +47,6 @@ int main()
 		// 4 - program 2 is writing
 		array[4] = 0;
 	} else {
-		array[0] += 1;
-
 		while (array[4] != 0) {
 
 		}
@@ -57,7 +55,7 @@ int main()
 		// Critical Zone
 
 		for (i = 0; i < 1000000000L; i++);
-
+		array[0] += 1;
 		array[2] += 1;
 
 		array[3] = 0;
