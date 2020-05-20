@@ -63,7 +63,7 @@ int main(void)
 	ptr->second_program_counter++;
 	ptr->total_counter++;
 
-	printf("Program 1: %d, Program 2: %d, Total: %d", ptr->first_program_counter, ptr->second_program_counter, ptr->total_counter);
+	printf("Program 1: %d, Program 2: %d, Total: %d\n", ptr->first_program_counter, ptr->second_program_counter, ptr->total_counter);
 
 	/* Прекращаем отображать файл в память, записываем содержимое отображения на диск и освобождаем память. */
 
