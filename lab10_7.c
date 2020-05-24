@@ -20,7 +20,7 @@ int child_counter = 0;
 int child_result = 0;
 
 void child_handler(int nsig) {
-	if (child_counter == 32) {
+	if (child_counter == 31) {
 		close(fd[1]);
 		close(fd[0]);
 
