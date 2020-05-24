@@ -102,6 +102,7 @@ int main(int argc, char **argv) {
 
 		while (1);
 	} else {
+		printf("Child (%d id) subscribes on SIGUSR signals\n", getpid());
 		(void) signal(SIGUSR2, child_handler);
 		(void) signal(SIGUSR1, child_handler_1);
 
