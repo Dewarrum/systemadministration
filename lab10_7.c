@@ -28,6 +28,10 @@ int child_result = 0;
 
 void child_handler(int nsig) {
 	if (child_counter == 32) {
+		char close[1];
+		close[0] = 255;
+		size = write(fd[1], close, 1);
+
 		close(fd[1]);
 		close(fd[0]);
 
@@ -58,9 +62,12 @@ int bin_array[32];
 int result;
 
 void parent_handler(int nsig) {
-	if (parent_counter == 32) {
+	char close[1];
+	read(fd[1], close, 1);
+	if (close[0] == 255) {
 		close(fd[0]);
 		close(fd[1]);
+
 		exit(0);
 	}
 
