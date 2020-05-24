@@ -70,13 +70,15 @@ int result;
 
 void parent_handler(int nsig) {
 	char close_bytes[1];
-	read(fd[0], close_bytes, 1);
-	printf("Parent got close signal from child %d, parent_counter = %d\n", close_bytes[0], parent_counter);
-	if (close_bytes[0] == 255) {
-		close(fd[0]);
-		close(fd[1]);
+	if (parent_counter > 0) {
+		read(fd[0], close_bytes, 1);
+		printf("Parent got close signal from child %d, parent_counter = %d\n", close_bytes[0], parent_counter);
+		if (close_bytes[0] == 255) {
+			close(fd[0]);
+			close(fd[1]);
 
-		exit(0);
+			exit(0);
+		}
 	}
 
 	size_t size;
