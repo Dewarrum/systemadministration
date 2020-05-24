@@ -28,22 +28,12 @@ int child_result = 0;
 
 void child_handler(int nsig) {
 	if (child_counter == 32) {
-		char close_bytes[1];
-		close_bytes[0] = 1;
-		printf("Child sent close signal (%d) to parent, child_counter = %d\n", close_bytes[0], child_counter);
-		write(fd[1], close_bytes, 1);
-
 		close(fd[1]);
 		close(fd[0]);
 
 		printf("Child received %d\n", child_result);
+		kill(getppid(), SIGINT);
 		exit(0);
-	}
-	else {
-		char close_bytes[1];
-		close_bytes[0] = 0;
-		printf("Child sent close signal (%d) to parent, child_counter = %d\n", close_bytes[0], child_counter);
-		write(fd[1], close_bytes, 1);
 	}
 
 	char bit[2];
@@ -68,19 +58,14 @@ int parent_counter = 0;
 int bin_array[32];
 int result;
 
+void parent_close_handler(int nsig) {
+	close(fd[0]);
+	close(fd[1]);
+
+	exit(0);
+}
+
 void parent_handler(int nsig) {
-	char close_bytes[1];
-	if (parent_counter > 0) {
-		read(fd[0], close_bytes, 1);
-		printf("Parent got close signal from child %d, parent_counter = %d\n", close_bytes[0], parent_counter);
-		if (close_bytes[0] == 1) {
-			close(fd[0]);
-			close(fd[1]);
-
-			exit(0);
-		}
-	}
-
 	size_t size;
 	char bit[2];
 	bit[0] = (char) bin_array[parent_counter];
