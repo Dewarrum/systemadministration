@@ -100,6 +100,7 @@ int main(int argc, char **argv) {
 		int_to_bin_digit(number, bin_array);
 
 		kill(result, SIGUSR1);
+		printf("Parent sent SIGUSR1 to child process with %d id\n", result);
 
 		while (1);
 	} else {
