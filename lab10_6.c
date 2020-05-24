@@ -70,7 +70,6 @@ int main() {
 	if (result < 0) {
 		printf("Can\'t fork child\n");
 		exit(-1);
-
 	} else if (result > 0) {
 		printf("Parent process start, pid: %d\n", getpid());
 
@@ -84,7 +83,7 @@ int main() {
 
 		printf("Before kill\n");
 
-		kill(0, SIGUSR1);
+		kill(result, SIGUSR1);
 
 		printf("After kill\n");
 
