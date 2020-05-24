@@ -43,7 +43,7 @@ void child_handler(int nsig) {
 	child_result = child_result | bit[0] << child_counter;
 	child_counter++;
 
-	kill(ppid, SIGUSR2);
+	kill(ppid, SIGUSR1);
 	printf("Child sends signal to parent with id %d\n", ppid);
 }
 
