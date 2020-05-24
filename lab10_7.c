@@ -28,14 +28,14 @@ void child_handler(int nsig) {
 		exit(0);
 	}
 
-	int bit[1];
+	char bit[1];
 	size_t size;
 	pid_t ppid = getppid();
 	printf("Child before reading\n");
-	size = read(fd[0], bit, sizeof(int));
+	size = read(fd[0], bit, sizeof(char));
 	printf("Child received %d-th bit\n", child_counter);
 
-	if (size < sizeof(int)) {
+	if (size < sizeof(char)) {
 		printf("Can\'t read string\n");
 		exit(-1);
 	}
@@ -67,12 +67,12 @@ void parent_handler(int nsig) {
 	}
 
 	size_t size;
-	int bit[1];
+	char bit[1];
 	bit[0] = bin_array[parent_counter];
-	size = write(fd[0], bit, sizeof(int));
+	size = write(fd[0], bit, sizeof(char));
 	printf("Parent sent %d-th bit\n", parent_counter);
 
-	if (size < sizeof(int)) {
+	if (size < sizeof(char)) {
 		printf("Can\'t read string\n");
 		exit(-1);
 	}
