@@ -30,6 +30,7 @@ void child_handler(int nsig) {
 	if (child_counter == 32) {
 		char close_bytes[1];
 		close_bytes[0] = 255;
+		printf("Child sent close signal (%d) to parent, child_counter = %d\n", close_bytes[0], child_counter);
 		write(fd[1], close_bytes, 1);
 
 		close(fd[1]);
@@ -50,7 +51,7 @@ void child_handler(int nsig) {
 		exit(-1);
 	}
 
-	child_result = child_result | bit[0] << (32 - child_counter);
+	child_result = child_result | bit[0] << (31 - child_counter);
 	child_counter++;
 
 	kill(ppid, SIGUSR1);
@@ -64,7 +65,7 @@ int result;
 void parent_handler(int nsig) {
 	char close_bytes[1];
 	read(fd[1], close_bytes, 1);
-	printf("Parent got close signal from child %d\n", close_bytes[0]);
+	printf("Parent got close signal from child %d, parent_counter = %d\n", close_bytes[0], parent_counter);
 	if (close_bytes[0] == 255) {
 		close(fd[0]);
 		close(fd[1]);
