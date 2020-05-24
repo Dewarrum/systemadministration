@@ -29,6 +29,8 @@ void child_handler(int nsig) {
 	close(fd[1]);
 	close(fd[0]);
 
+	printf("Child sends message to parent with %d pid\n", ppid);
+
 	kill(ppid, SIGUSR2);
 
 	exit(0);
