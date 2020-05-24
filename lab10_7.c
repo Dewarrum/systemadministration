@@ -58,7 +58,7 @@ int bin_array[32];
 int result;
 
 void parent_handler(int nsig) {
-	if (parent_counter == 31) {
+	if (parent_counter == 32) {
 		close(fd[0]);
 		close(fd[1]);
 		exit(0);
@@ -69,7 +69,7 @@ void parent_handler(int nsig) {
 	bit[0] = (char) bin_array[parent_counter];
 	bit[1] = '\0';
 	size = write(fd[0], bit, 2);
-	printf("Parent sent %d-th bit\n", parent_counter);
+	printf("Parent sent bit[%d] = %d\n", parent_counter, bin_array[parent_counter]);
 
 	if (size < 2) {
 		printf("Can\'t read string\n");
