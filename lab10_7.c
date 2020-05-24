@@ -20,6 +20,7 @@ int child_counter = 0;
 int child_result = 0;
 
 void child_handler(int nsig) {
+	printf("Child handler\n", child_counter);
 	if (child_counter == 32) {
 		close(fd[1]);
 		close(fd[0]);
@@ -96,7 +97,7 @@ int main(int argc, char **argv) {
 		printf("Can\'t fork child\n");
 		exit(-1);
 	} else if (result > 0) {
-		(void) signal(SIGUSR2, parent_handler);
+		(void) signal(SIGUSR1, parent_handler);
 		int_to_bin_digit(number, bin_array);
 
 		printf("Parent sent SIGUSR1 to child process with %d id\n", result);
@@ -108,7 +109,7 @@ int main(int argc, char **argv) {
 
 		pid_t ppid = getppid();
 		printf("Child sends signal to parent with %d pid\n", ppid);
-		kill(ppid, SIGUSR2);
+		kill(ppid, SIGUSR1);
 		printf("Start processing\n");
 
 		while (1);
