@@ -45,14 +45,6 @@ void child_handler(int nsig) {
 
 	kill(ppid, SIGUSR2);
 	printf("Child sends signal to parent with id %d\n", ppid);
-	exit(0);
-}
-
-void child_handler_1(int nsig) {
-	pid_t ppid = getppid();
-	printf("Child sends signal to parent with %d pid\n", ppid);
-	kill(ppid, SIGUSR2);
-	printf("Start processing\n");
 }
 
 int parent_counter = 0;
