@@ -70,6 +70,8 @@ int main() {
 		exit(-1);
 
 	} else if (result > 0) {
+		printf("Parent process start, pid: %d\n", getpid());
+
 		(void) signal(SIGUSR2, parent_handler);
 		size = write(fd[1], "Hello, world!", 14);
 
@@ -82,6 +84,7 @@ int main() {
 
 		while (1);
 	} else {
+		printf("Child process start, pid: %d\n", getpid());
 		(void) signal(SIGUSR1, child_handler);
 
 		while (1);
