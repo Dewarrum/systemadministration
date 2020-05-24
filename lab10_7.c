@@ -79,6 +79,7 @@ void parent_handler(int nsig) {
 
 int main(int argc, char **argv) {
 	size_t size;
+	printf("Got %s as parameter\n", argv[1]);
 	int number = atoi(argv[1]);
 
 	if (pipe(fd) < 0) {
