@@ -3,6 +3,7 @@
 #include <wait.h>
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void my_handler(int nsig) {
 	int status;
