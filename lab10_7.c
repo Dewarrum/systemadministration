@@ -28,11 +28,11 @@ void child_handler(int nsig) {
 		exit(0);
 	}
 
-	int bit;
+	int bit[1];
 	size_t size;
 	pid_t ppid = getppid();
 	printf("Child before reading\n");
-	size = read(fd[0], (void*)&bit, sizeof(int));
+	size = read(fd[0], (void*)bit, sizeof(int));
 	printf("Child received %d-th bit\n", child_counter);
 
 	if (size < sizeof(int)) {
@@ -40,7 +40,7 @@ void child_handler(int nsig) {
 		exit(-1);
 	}
 
-	child_result = child_result | 1 << child_counter;
+	child_result = child_result | bit << child_counter;
 	child_counter++;
 
 	kill(ppid, SIGUSR2);
@@ -67,7 +67,9 @@ void parent_handler(int nsig) {
 	}
 
 	size_t size;
-	size = write(fd[0], (void*)&bin_array[parent_counter], sizeof(int));
+	int bit[1];
+	bit[0] = bin_array[parent_counter];
+	size = write(fd[0], (void*)bit, sizeof(int));
 	printf("Parent sent %d-th bit\n", parent_counter);
 
 	if (size < sizeof(int)) {
