@@ -64,6 +64,7 @@ int result;
 void parent_handler(int nsig) {
 	char close_bytes[1];
 	read(fd[1], close_bytes, 1);
+	printf("Parent got close signal from child %d\n", close_bytes[0]);
 	if (close_bytes[0] == 255) {
 		close(fd[0]);
 		close(fd[1]);
