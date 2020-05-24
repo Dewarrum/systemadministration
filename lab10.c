@@ -1,6 +1,6 @@
 #include <sys/types.h>
 #include <unistd.h>
-#include <waith>
+#include <wait.h>
 #include <signal.h>
 #include <stdio.h>
 
