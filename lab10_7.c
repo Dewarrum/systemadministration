@@ -38,7 +38,7 @@ void child_handler(int nsig) {
 	char bit[2];
 	size_t size;
 	pid_t ppid = getppid();
-	size = read(fd[1], bit, 2);
+	size = read(fd[0], bit, 2);
 	printf("Child received bit[%d] = %d\n", child_counter, bit[0]);
 
 	if (size < 2) {
@@ -68,7 +68,7 @@ void parent_handler(int nsig) {
 	char bit[2];
 	bit[0] = (char) bin_array[parent_counter];
 	bit[1] = '\0';
-	size = write(fd[0], bit, 2);
+	size = write(fd[1], bit, 2);
 	printf("Parent sent bit[%d] = %d\n", parent_counter, bit[0]);
 
 	if (size < 2) {
