@@ -25,7 +25,6 @@ void my_handler(int nsig) {
 }
 
 int main(void) {
-
 	pid_t pid;
 	int i;
 
