@@ -20,7 +20,6 @@ int child_counter = 0;
 int child_result = 0;
 
 void child_handler(int nsig) {
-	printf("Child handler\n", child_counter);
 	if (child_counter == 32) {
 		close(fd[1]);
 		close(fd[0]);
@@ -32,6 +31,7 @@ void child_handler(int nsig) {
 	int bit;
 	size_t size;
 	pid_t ppid = getppid();
+	printf("Child before reading\n");
 	size = read(fd[0], (void*)&bit, sizeof(int));
 	printf("Child received %d-th bit\n", child_counter);
 
