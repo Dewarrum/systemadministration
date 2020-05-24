@@ -79,6 +79,8 @@ int main() {
 		}
 
 		kill(0, SIGUSR1);
+
+		while (1);
 	} else {
 		(void) signal(SIGUSR1, child_handler);
 
