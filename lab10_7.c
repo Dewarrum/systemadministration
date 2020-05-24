@@ -30,7 +30,7 @@ void child_handler(int nsig) {
 	if (child_counter == 32) {
 		char close_bytes[1];
 		close_bytes[0] = 255;
-		size = write(fd[1], close_bytes, 1);
+		write(fd[1], close_bytes, 1);
 
 		close(fd[1]);
 		close(fd[0]);
