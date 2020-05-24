@@ -39,6 +39,12 @@ void child_handler(int nsig) {
 		printf("Child received %d\n", child_result);
 		exit(0);
 	}
+	else {
+		char close_bytes[1];
+		close_bytes[0] = 255;
+		printf("Child sent close signal (%d) to parent, child_counter = %d\n", close_bytes[0], child_counter);
+		write(fd[1], close_bytes, 1);
+	}
 
 	char bit[2];
 	size_t size;
