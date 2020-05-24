@@ -11,6 +11,8 @@ void int_to_bin_digit(unsigned int in, int* out) {
 		out[i] = (in & mask) ? 1 : 0;
 		in <<= 1;
 	}
+
+	printf("Converted %d to binary\n", in);
 }
 
 int fd[2];
