@@ -66,7 +66,7 @@ void parent_handler(int nsig) {
 
 	size_t size;
 	char bit[2];
-	bit[0] = bin_array[parent_counter];
+	bit[0] = (char) bin_array[parent_counter];
 	bit[1] = '\0';
 	size = write(fd[0], bit, 2);
 	printf("Parent sent %d-th bit\n", parent_counter);
