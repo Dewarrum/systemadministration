@@ -80,7 +80,11 @@ int main() {
 			exit(-1);
 		}
 
+		printf("Before kill\n");
+
 		kill(0, SIGUSR1);
+
+		printf("After kill\n");
 
 		while (1);
 	} else {
