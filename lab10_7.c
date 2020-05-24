@@ -40,7 +40,7 @@ void child_handler(int nsig) {
 		exit(-1);
 	}
 
-	child_result = child_result | bit << child_counter;
+	child_result = child_result | bit[0] << child_counter;
 	child_counter++;
 
 	kill(ppid, SIGUSR2);
