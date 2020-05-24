@@ -99,14 +99,17 @@ int main(int argc, char **argv) {
 		(void) signal(SIGUSR2, parent_handler);
 		int_to_bin_digit(number, bin_array);
 
-		kill(result, SIGUSR1);
 		printf("Parent sent SIGUSR1 to child process with %d id\n", result);
 
 		while (1);
 	} else {
 		printf("Child (%d id) subscribes on SIGUSR signals\n", getpid());
 		(void) signal(SIGUSR2, child_handler);
-		(void) signal(SIGUSR1, child_handler_1);
+
+		pid_t ppid = getppid();
+		printf("Child sends signal to parent with %d pid\n", ppid);
+		kill(ppid, SIGUSR2);
+		printf("Start processing\n");
 
 		while (1);
 	}
