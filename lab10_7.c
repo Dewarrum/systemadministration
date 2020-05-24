@@ -81,6 +81,7 @@ int main(int argc, char **argv) {
 	size_t size;
 	printf("Got %s as parameter\n", argv[1]);
 	int number = atoi(argv[1]);
+	printf("Parsed %s as %d\n", argv[1], number);
 
 	if (pipe(fd) < 0) {
 		printf("Can\'t create pipe\n");
