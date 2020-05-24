@@ -30,6 +30,7 @@ void child_handler(int nsig) {
 	size_t size;
 	pid_t ppid = getppid();
 	size = read(fd[0], (void*)&bit, sizeof(int));
+	printf("Child received %d-th bit\n", child_counter);
 
 	if (size < sizeof(int)) {
 		printf("Can\'t read string\n");
@@ -47,6 +48,7 @@ void child_handler(int nsig) {
 void child_handler_1(int nsig) {
 	pid_t ppid = getppid();
 	kill(ppid, SIGUSR2);
+	printf("Start processing\n");
 }
 
 int parent_counter = 0;
@@ -61,8 +63,8 @@ void parent_handler(int nsig) {
 	}
 
 	size_t size;
-	char resstring[20];
 	size = write(fd[0], (void*)&bin_array[parent_counter], sizeof(int));
+	printf("Parent sent %d-th bit\n", parent_counter);
 
 	if (size < sizeof(int)) {
 		printf("Can\'t read string\n");
