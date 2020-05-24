@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 void int_to_bin_digit(unsigned int in, int* out) {
-	unsigned int mask = 1U << (count - 1);
+	unsigned int mask = 1U << (32 - 1);
 	int i;
 	for (i = 0; i < 32; i++) {
 		out[i] = (in & mask) ? 1 : 0;
@@ -45,6 +45,7 @@ void child_handler(int nsig) {
 }
 
 void child_handler_1(int nsig) {
+	pid_t ppid = getppid();
 	kill(ppid, SIGUSR2);
 }
 
