@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 void int_to_bin_digit(unsigned int in, int* out) {
+	int initial = in;
 	unsigned int mask = 1U << (32 - 1);
 	int i;
 	for (i = 0; i < 32; i++) {
@@ -12,7 +13,13 @@ void int_to_bin_digit(unsigned int in, int* out) {
 		in <<= 1;
 	}
 
-	printf("Converted %d to binary\n", in);
+	printf("Converted %d to binary: ", initial);
+
+	for (i = 0; i < 32; i++) {
+		printf("%d ", out[i]);
+	}
+
+	printf("\n");
 }
 
 int fd[2];
