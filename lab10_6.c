@@ -39,7 +39,7 @@ void child_handler(int nsig) {
 void parent_handler(int nsig) {
 	size_t size;
 	char resstring[20];
-	size = read(fd[0], resstring, 14);
+	size = read(fd[0], resstring, 20);
 
 	if (size < 20) {
 		printf("Can\'t read string\n");
