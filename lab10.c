@@ -52,6 +52,7 @@ void my_handler(int nsig) {
 
 int main(void) {
 	pid_t pid;
+	pid_t p_ids[5];
 	int i;
 
 	(void) signal(SIGCHLD, my_handler);
@@ -64,19 +65,24 @@ int main(void) {
 		} else if (pid == 0) {
 			exit(200 + i);
 		} else {
-			pthread_create(&t_ids[i], NULL, &thread_func, (void*) &pid);
-			printf("Thread waiting for process %d created\n", pid);
 		}
+
+		p_ids[i] = pid;
 	}
 
 	if (pid > 0) {
+		for (i = 0; i < 5; i++) {
+			pthread_create(&t_ids[i], NULL, &thread_func, (void*) p_ids + i);
+			printf("Thread waiting for process %d created\n", pid);
+		}
+
 		for (i = 0; i < 5; i++) {
 			pthread_join(t_ids[i], NULL);
 			printf("Thread waiting for process %d joined\n", pid);
 		}
 	}
 
-	while (exited_processes_count < 5);
+	while (1);
 	return 0;
 
 }
