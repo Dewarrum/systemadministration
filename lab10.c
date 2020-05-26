@@ -31,6 +31,7 @@ int exited_processes_count = 0;
 
 void my_handler(int nsig) {
 	pthread_t tid;
+	(void) signal(SIGCHLD, my_handler);
 	if (pthread_create(&tid, NULL, &thread_func, NULL)) {
 		printf("Error creating new thread\n");
 		exit(-1);
