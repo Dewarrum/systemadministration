@@ -35,6 +35,7 @@ int main(void) {
 			printf("Can\'t fork child %d\n", i);
 			exit(1);
 		} else if (pid == 0) {
+			kill(getppid(), SIGCHLD);
 			exit(200 + i);
 		}
 	}
