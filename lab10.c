@@ -9,7 +9,7 @@
 
 void *thread_func(void *arg) {
 	int status;
-	pid_t* tmp = (pid_t*) arg
+	pid_t* tmp = (pid_t*) arg;
 	pid_t pid = *tmp;
 
 	if ((pid = waitpid(-1, &status, 0)) < 0) {
