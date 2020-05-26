@@ -9,7 +9,8 @@
 
 void *thread_func(void *arg) {
 	int status;
-	pid_t pid;
+	pid_t* tmp = (pid_t*) arg
+	pid_t pid = *tmp;
 
 	if ((pid = waitpid(-1, &status, 0)) < 0) {
 		printf("Some error on waitpid errno = %d\n", errno);
@@ -30,7 +31,7 @@ void *thread_func(void *arg) {
 int exited_processes_count = 0;
 
 void my_handler(int nsig) {
-	pthread_t tid;
+	/* pthread_t tid;
 	(void) signal(SIGCHLD, my_handler);
 	if (pthread_create(&tid, NULL, &thread_func, NULL)) {
 		printf("Error creating new thread\n");
@@ -41,7 +42,7 @@ void my_handler(int nsig) {
 	pthread_join(tid, NULL);
 	printf("Thread %d joined\n", tid);
 	exited_processes_count++;
-	printf("Current exitted processes count %d\n", exited_processes_count);
+	printf("Current exitted processes count %d\n", exited_processes_count); */
 }
 
 int main(void) {
@@ -49,6 +50,7 @@ int main(void) {
 	int i;
 
 	(void) signal(SIGCHLD, my_handler);
+	pthread_t t_ids[5];
 
 	for (i = 0; i < 5; i++) {
 		if ((pid = fork()) < 0) {
@@ -56,6 +58,14 @@ int main(void) {
 			exit(1);
 		} else if (pid == 0) {
 			exit(200 + i);
+		} else {
+			pthread_create(&t_ids[i], NULL, &thread_func, (void*) &pid);
+		}
+	}
+
+	if (pid > 0) {
+		for (i = 0; i < 5; i++) {
+			pthread_join(t_ids[i], NULL);
 		}
 	}
 
