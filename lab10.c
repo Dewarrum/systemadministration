@@ -7,6 +7,8 @@
 #include <errno.h>
 #include <pthread.h>
 
+int exited_processes_count = 0;
+
 void *thread_func(void *arg) {
 	int status;
 	pid_t* tmp = (pid_t*) arg;
@@ -28,11 +30,10 @@ void *thread_func(void *arg) {
 	}
 
 	printf("Thread waiting for process %d finished\n", pid);
+	exited_processes_count++;
 
 	return NULL;
 }
-
-int exited_processes_count = 0;
 
 void my_handler(int nsig) {
 	/* pthread_t tid;
@@ -64,12 +65,14 @@ int main(void) {
 			exit(200 + i);
 		} else {
 			pthread_create(&t_ids[i], NULL, &thread_func, (void*) &pid);
+			printf("Thread waiting for process %d created\n", pid);
 		}
 	}
 
 	if (pid > 0) {
 		for (i = 0; i < 5; i++) {
 			pthread_join(t_ids[i], NULL);
+			printf("Thread waiting for process %d joined\n", pid);
 		}
 	}
 
