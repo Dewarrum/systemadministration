@@ -72,13 +72,13 @@ int main(void) {
 
 	if (pid > 0) {
 		for (i = 0; i < 5; i++) {
-			pthread_create(&t_ids[i], NULL, &thread_func, (void*) p_ids + i);
-			printf("Thread waiting for process %d created\n", pid);
+			pthread_create(&t_ids[i], NULL, &thread_func, (void*) (p_ids + i));
+			// printf("Thread waiting for process %d created\n", pid);
 		}
 
 		for (i = 0; i < 5; i++) {
 			pthread_join(t_ids[i], NULL);
-			printf("Thread waiting for process %d joined\n", pid);
+			// printf("Thread waiting for process %d joined\n", pid);
 		}
 	}
 
