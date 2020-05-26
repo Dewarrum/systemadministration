@@ -29,7 +29,7 @@ void *thread_func(void *arg) {
 		}
 	}
 
-	printf("Thread waiting for process %d finished\n", pid);
+	// printf("Thread waiting for process %d finished\n", pid);
 	exited_processes_count++;
 
 	return NULL;
