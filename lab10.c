@@ -12,6 +12,8 @@ void *thread_func(void *arg) {
 	pid_t* tmp = (pid_t*) arg;
 	pid_t pid = *tmp;
 
+	printf("Thread waiting for process %d started\n", pid);
+
 	if ((pid = waitpid(-1, &status, 0)) < 0) {
 		printf("Some error on waitpid errno = %d\n", errno);
 
@@ -24,6 +26,8 @@ void *thread_func(void *arg) {
 			       (status & 0x80) ? "with core file" : "without core file");
 		}
 	}
+
+	printf("Thread waiting for process %d finished\n", pid);
 
 	return NULL;
 }
