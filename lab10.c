@@ -36,8 +36,11 @@ void my_handler(int nsig) {
 		exit(-1);
 	}
 
+	printf("Thread %d started\n", tid);
 	pthread_join(tid, NULL);
+	printf("Thread %d joined\n", tid);
 	exited_processes_count++;
+	printf("Current exitted processes count %d\n", exited_processes_count);
 }
 
 int main(void) {
