@@ -28,14 +28,14 @@ int main(void) {
 	pid_t pid;
 	int i;
 
-	(void) signal(SIGCHLD, my_handler);
+	(void) signal(SIGUSR1, my_handler);
 
 	for (i = 0; i < 5; i++) {
 		if ((pid = fork()) < 0) {
 			printf("Can\'t fork child %d\n", i);
 			exit(1);
 		} else if (pid == 0) {
-			kill(getppid(), SIGCHLD);
+			kill(getppid(), SIGUSR1);
 			exit(200 + i);
 		}
 	}
