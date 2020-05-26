@@ -9,9 +9,8 @@
 void my_handler(int nsig) {
 	int status;
 	pid_t pid;
-	(void) signal(SIGCHLD, my_handler);
 
-	if ((pid = waitpid(-1, &status, 0)) < 0) {
+	if ((pid = waitpid(-1, &status, WNOHANG)) < 0) {
 		printf("Some error on waitpid errno = %d\n", errno);
 
 	} else {
@@ -23,8 +22,6 @@ void my_handler(int nsig) {
 			       (status & 0x80) ? "with core file" : "without core file");
 		}
 	}
-	
-	(void) signal(SIGCHLD, my_handler);
 }
 
 int main(void) {
