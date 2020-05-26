@@ -5,12 +5,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <pthread.h>
 
-void my_handler(int nsig) {
+void *thread_func(void *arg) {
 	int status;
 	pid_t pid;
 
-	if ((pid = waitpid(-1, &status, WNOHANG)) < 0) {
+	if ((pid = waitpid(-1, &status, 0)) < 0) {
 		printf("Some error on waitpid errno = %d\n", errno);
 
 	} else {
@@ -22,6 +23,21 @@ void my_handler(int nsig) {
 			       (status & 0x80) ? "with core file" : "without core file");
 		}
 	}
+
+	return NULL;
+}
+
+int exited_processes_count = 0;
+
+void my_handler(int nsig) {
+	pthread_t tid;
+	if (pthread_create(&tid, NULL, &thread_func, NULL)) {
+		printf("Error creating new thread\n");
+		exit(-1);
+	}
+
+	pthread_join(tid, NULL);
+	exited_processes_count++;
 }
 
 int main(void) {
@@ -39,7 +55,7 @@ int main(void) {
 		}
 	}
 
-	while (1);
+	while (exited_processes_count < 5);
 	return 0;
 
 }
